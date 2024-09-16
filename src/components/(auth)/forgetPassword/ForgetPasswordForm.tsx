@@ -1,30 +1,33 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+import { useForgotPassMutation } from "@/redux/api/authApi";
+import { Error_Modal, Success_model } from "@/utils/modalHook";
 import type { FormProps } from "antd";
-import { Button,  Form, Input} from "antd";
+import { Button, Form, Input } from "antd";
 import { useRouter } from "next/navigation";
 
 type FieldType = {
   email?: string;
 };
 
-
-
 const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
   console.log("Failed:", errorInfo);
 };
 
 const ForgetPasswordForm = () => {
-    const route = useRouter();
+  const [forgotpassword] = useForgotPassMutation();
+  const route = useRouter();
 
-
-    //handle password change
-    const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
-        console.log("Success:", values);
-        
-        if(values.email){
-          route.push("/setNewPass")
-        }
-      };
+  //handle password change
+  const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
+    try {
+      const res = await forgotpassword(values).unwrap();
+      console.log(res);
+      Success_model({ title: "An otp sent to your email" });
+    } catch (error: any) {
+      Error_Modal({ title: error?.data?.message });
+    }
+  };
 
   return (
     <Form

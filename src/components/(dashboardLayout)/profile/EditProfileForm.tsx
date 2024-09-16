@@ -1,11 +1,39 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { ConfigProvider } from "antd";
-import { Form, Input, Button } from "antd";
+import { useUpdateProfileMutation } from "@/redux/api/authApi";
+import { Error_Modal, Success_model } from "@/utils/modalHook";
+import { Button, ConfigProvider, Form, Input } from "antd";
+import { useEffect } from "react";
 
-const EditProfileForm = () => {
-// @ts-expect-error: Ignoring TypeScript error due to inferred 'any' type for 'values' which is handled in the form submit logic
-  const onFinishEditProfile = (values) => {
-    console.log("Edit Profile values:", values);
+const EditProfileForm = ({ data }: any) => {
+  const [form] = Form.useForm(); // Create form instance
+  const [updateProfile] = useUpdateProfileMutation();
+  useEffect(() => {
+    // When 'data' is fetched or updated, set the form fields
+    if (data) {
+      form.setFieldsValue({
+        firstName: data?.name?.firstName,
+        middleName: data?.name?.middleName,
+        email: data?.email,
+        contactNo: data?.phoneNumber,
+      });
+    }
+  }, [data, form]); // Re-run effect when 'data' changes
+
+  const onFinishEditProfile = async (values: any) => {
+    const data = {
+      name: {
+        firstName: values?.firstName,
+        middleName: values?.middleName,
+      },
+    };
+    try {
+      const res = await updateProfile(data).unwrap();
+      console.log(res);
+      Success_model({ title: "Profile Updated Successfully" });
+    } catch (error: any) {
+      Error_Modal(error?.data?.message);
+    }
   };
 
   return (
@@ -25,34 +53,23 @@ const EditProfileForm = () => {
       }}
     >
       <Form
+        form={form} // Assign the form instance
         layout="vertical"
         onFinish={onFinishEditProfile}
-        initialValues={{
-          userName: "Akash Sharif",
-          email: "akash@gmail.com",
-          contactNo: "99007007007",
-        }}
       >
-        <Form.Item
-          label="User Name"
-          name="userName"
-        >
+        <Form.Item label="First Name" name="firstName">
+          <Input size="large" />
+        </Form.Item>
+        <Form.Item label="Last Name" name="middleName">
           <Input size="large" />
         </Form.Item>
 
-        <Form.Item
-          label="Email"
-          name="email"
-         
-        >
-          <Input size="large" />
+        <Form.Item label="Email" name="email">
+          <Input size="large" type="email" disabled />
         </Form.Item>
 
-        <Form.Item
-          label="Contact no"
-          name="contactNo"
-        >
-          <Input size="large" />
+        <Form.Item label="Contact no" name="contactNo">
+          <Input size="large" disabled />
         </Form.Item>
 
         <Form.Item>

@@ -1,17 +1,16 @@
+import { useProfileQuery } from "@/redux/api/authApi";
 import { Button } from "antd";
-import Image from "next/image";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { GoBell } from "react-icons/go";
 import { IoMenu } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
-import user from "@/assets/image/profile.png";
-import Link from "next/link";
 
 type TProps = {
   collapsed: boolean;
   setCollapsed: (collapsed: boolean) => void;
 };
 const Navbar = ({ collapsed, setCollapsed }: TProps) => {
+  const { data: Pdata } = useProfileQuery({});
   const pathname = usePathname();
   return (
     <nav className="flex items-center justify-between py-4 pr-4">
@@ -32,7 +31,7 @@ const Navbar = ({ collapsed, setCollapsed }: TProps) => {
         </h1>
       </div>
       <div className="flex items-center gap-x-6">
-      <Link href="/notifications">
+        {/* <Link href="/notifications">
         <div
           role="button"
           className="relative aspect-square size-12 rounded-full bg-info flex-item-center"
@@ -42,17 +41,21 @@ const Navbar = ({ collapsed, setCollapsed }: TProps) => {
             3
           </span>
         </div>
-        </Link>
+        </Link> */}
         <Link href="/profile">
           <div className="flex items-center gap-x-3">
-            <Image
+            {/* <Image
               src={user}
               alt="admin profile"
               width={48}
               height={48}
               className="rounded-full object-cover"
-            />
-            <h4 className="text-base font-bold text-info">Akash</h4>
+            /> */}
+            <h4 className="text-base font-bold text-info">
+              {Pdata?.data?.name?.firstName +
+                " " +
+                Pdata?.data?.name?.middleName}
+            </h4>
           </div>
         </Link>
       </div>

@@ -2,13 +2,12 @@
 import { Menu, MenuProps } from "antd";
 import Sider from "antd/es/layout/Sider";
 import Link from "next/link";
-import { MdPeopleOutline } from "react-icons/md";
-import { TbMessage2Dollar } from "react-icons/tb";
-import { MdOutlineManageHistory } from "react-icons/md";
-import { BiLogOut } from "react-icons/bi";
-import { HiOutlineCircleStack } from "react-icons/hi2";
-import { FaQ } from "react-icons/fa6";
 import { useState } from "react";
+import { BiLogOut } from "react-icons/bi";
+import { FaQ, FaUser } from "react-icons/fa6";
+import { HiOutlineCircleStack } from "react-icons/hi2";
+import { MdOutlineManageHistory, MdPeopleOutline } from "react-icons/md";
+import { TbMessage2Dollar } from "react-icons/tb";
 
 type TSidebarType = {
   collapsed: boolean;
@@ -44,6 +43,11 @@ const items: MenuItem[] = [
         icon: <FaQ size={24} />,
       },
     ],
+  },
+  {
+    key: "Profile",
+    label: <Link href="/profile">Profile</Link>,
+    icon: <FaUser size={24} />,
   },
   {
     key: "logout",

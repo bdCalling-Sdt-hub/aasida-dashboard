@@ -1,11 +1,19 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { ConfigProvider } from "antd";
-import { Form, Input, Button } from "antd";
+import { useChangePasswordMutation } from "@/redux/api/authApi";
+import { Error_Modal, Success_model } from "@/utils/modalHook";
+import { Button, ConfigProvider, Form, Input } from "antd";
 
 const ChangePasswordForm = () => {
+  const [changePasword] = useChangePasswordMutation();
   // @ts-expect-error: Ignoring TypeScript error due to inferred 'any' type for 'values' which is handled in the form submit logic
-  const onFinishChangePassword = (values) => {
-    console.log("Change Password values:", values);
+  const onFinishChangePassword = async (values) => {
+    try {
+      await changePasword(values).unwrap();
+      Success_model({ title: "Password Changed Successfully." });
+    } catch (error: any) {
+      Error_Modal(error?.data?.message);
+    }
   };
 
   return (
@@ -30,7 +38,7 @@ const ChangePasswordForm = () => {
       <Form layout="vertical" onFinish={onFinishChangePassword}>
         <Form.Item
           label="Current Password"
-          name="currentPassword"
+          name="oldPassword"
           rules={[
             {
               required: true,
@@ -43,7 +51,7 @@ const ChangePasswordForm = () => {
 
         <Form.Item
           label="New Password"
-          name="newPassword"
+          name="password"
           rules={[{ required: true, message: "Please enter a new password!" }]}
         >
           <Input.Password size="large" placeholder="New Password" />
@@ -51,7 +59,7 @@ const ChangePasswordForm = () => {
 
         <Form.Item
           label="Confirm New Password"
-          name="confirmNewPassword"
+          name="confirmPassword"
           rules={[
             {
               required: true,
@@ -59,7 +67,7 @@ const ChangePasswordForm = () => {
             },
             ({ getFieldValue }) => ({
               validator(_, value) {
-                if (!value || getFieldValue("newPassword") === value) {
+                if (!value || getFieldValue("password") === value) {
                   return Promise.resolve();
                 }
                 return Promise.reject(
@@ -73,7 +81,13 @@ const ChangePasswordForm = () => {
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" style={{backgroundColor: "#F8FAFC", color: "#232323"}} htmlType="submit" block size="large">
+          <Button
+            type="primary"
+            style={{ backgroundColor: "#F8FAFC", color: "#232323" }}
+            htmlType="submit"
+            block
+            size="large"
+          >
             Save Changes
           </Button>
         </Form.Item>
