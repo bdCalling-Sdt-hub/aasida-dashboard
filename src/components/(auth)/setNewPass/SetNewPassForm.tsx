@@ -1,32 +1,35 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+import { useResetPassMutation } from "@/redux/api/authApi";
+import { Error_Modal, Success_model } from "@/utils/modalHook";
 import type { FormProps } from "antd";
 import { Button, Form, Input } from "antd";
 import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 
 type FieldType = {
-  newPass?: string;
-  confirmPass?: string;
+  newPassword?: string;
+  confirmPassword?: string;
 };
-
 
 const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
   console.log("Failed:", errorInfo);
 };
 
 const SetNewPassForm = () => {
+  const [resetPassword] = useResetPassMutation();
   const route = useRouter();
 
-  const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
-    console.log("Success:", values);
-    if (values?.newPass === values?.confirmPass) {
-      toast.success("Successfully Password Reset");
-    } else {
-      toast.error("Does not match Comfirm Password");
+  const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
+    try {
+      await resetPassword(values).unwrap();
+      Success_model({ title: "Password reset successfully!!" });
+    } catch (error: any) {
+      console.log(error?.data?.message);
+      Error_Modal(error?.data?.message);
     }
-    route.push("/login")
+    // route.push("/login");
   };
-  
+
   return (
     <Form
       name="basic"
@@ -39,16 +42,16 @@ const SetNewPassForm = () => {
     >
       <Form.Item<FieldType>
         label="New Password"
-        name="newPass"
-        rules={[{ required: true, message: "Please input your email!" }]}
+        name="newPassword"
+        rules={[{ required: true, message: "Please input your new passowrd" }]}
       >
         <Input.Password size="large" placeholder="*******" />
       </Form.Item>
 
       <Form.Item<FieldType>
-        name="confirmPass"
+        name="confirmPassword"
         label="Confirm Password"
-        rules={[{ required: true, message: "Please input your password!" }]}
+        rules={[{ required: true, message: "Please confirm your password" }]}
       >
         <Input.Password size="large" placeholder="*******" />
       </Form.Item>

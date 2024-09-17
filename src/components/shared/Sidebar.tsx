@@ -1,4 +1,6 @@
 "use client";
+import { logout } from "@/redux/features/authSlice";
+import { useAppDispatch } from "@/redux/hooks";
 import { Menu, MenuProps } from "antd";
 import Sider from "antd/es/layout/Sider";
 import Link from "next/link";
@@ -55,11 +57,14 @@ const items: MenuItem[] = [
 ];
 
 const Sidebar = ({ collapsed, setCollapsed }: TSidebarType) => {
+  const dispatch = useAppDispatch();
   const [current, setCurrent] = useState("apply-management");
 
-  const onClick: MenuProps["onClick"] = (e) => {
-    console.log("click ", e);
+  const OnClick: MenuProps["onClick"] = (e) => {
     setCurrent(e.key);
+    if (e.key === "logout") {
+      dispatch(logout());
+    }
   };
 
   return (
@@ -73,7 +78,7 @@ const Sidebar = ({ collapsed, setCollapsed }: TSidebarType) => {
       <div>
         <div className="demo-logo-vertical pb-4 pt-20"></div>
         <Menu
-          onClick={onClick}
+          onClick={OnClick}
           defaultOpenKeys={["apply-management"]}
           selectedKeys={[current]}
           mode="inline"

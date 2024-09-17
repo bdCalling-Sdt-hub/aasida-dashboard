@@ -22,9 +22,9 @@ const ForgetPasswordForm = () => {
   const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
     try {
       const res = await forgotpassword(values).unwrap();
-      console.log(res);
+      sessionStorage.setItem("token", res?.data?.token);
       Success_model({ title: "An otp sent to your email" });
-      route.push("/verifyEmail")
+      route.push("/verifyEmail");
     } catch (error: any) {
       Error_Modal({ title: error?.data?.message });
     }

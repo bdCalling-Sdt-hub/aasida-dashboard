@@ -16,7 +16,7 @@ export const Error_Modal = (message: any) => {
   return Swal.fire({
     position: "center",
     icon: "error",
-    title: message?.title || "Failed!!!",
+    title: message?.title || message || "Failed!!!",
     text: message?.text || "",
     showConfirmButton: false,
     timer: 1500,
