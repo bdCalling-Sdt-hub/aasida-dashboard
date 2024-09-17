@@ -1,33 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import { useForgotPassMutation } from "@/redux/api/authApi";
 import { Error_Modal, Success_model } from "@/utils/modalHook";
 import type { FormProps } from "antd";
 import { Button, Form, Input } from "antd";
-import { useRouter } from "next/navigation";
 
 type FieldType = {
-  email?: string;
+  otp?: string;
 };
 
 const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
   console.log("Failed:", errorInfo);
 };
 
-const ForgetPasswordForm = () => {
-  const [forgotpassword] = useForgotPassMutation();
-  const route = useRouter();
-
+const VerifyEmailForm = () => {
   //handle password change
   const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
-    try {
-      const res = await forgotpassword(values).unwrap();
-      console.log(res);
-      Success_model({ title: "An otp sent to your email" });
-      route.push("/verifyEmail")
-    } catch (error: any) {
-      Error_Modal({ title: error?.data?.message });
-    }
+    console.log(values);
   };
 
   return (
@@ -39,19 +27,17 @@ const ForgetPasswordForm = () => {
       autoComplete="off"
       layout="vertical"
       className="md:w-[481px]"
+      
     >
       <Form.Item<FieldType>
-        label="Email"
-        name="email"
+        label="OTP"
+        name="otp"
+        style={{display: "flex", justifyContent: "center", alignItems: "center"}}
         rules={[
-          { required: true, message: "Please input your email!" },
-          {
-            type: "email",
-            message: "Please enter a valid email address!",
-          },
+          { required: true, message: "Please input OPT" },
         ]}
       >
-        <Input size="large" placeholder="Example@gamil.com" />
+        <Input.OTP size="large" length={4}/>
       </Form.Item>
 
       <Form.Item style={{ display: "flex", justifyContent: "center" }}>
@@ -60,11 +46,11 @@ const ForgetPasswordForm = () => {
           size="large"
           style={{ backgroundColor: "#232323", color: "#F8FAFC" }}
         >
-          Send Code
+          Verify 
         </Button>
       </Form.Item>
     </Form>
   );
 };
 
-export default ForgetPasswordForm;
+export default VerifyEmailForm;
