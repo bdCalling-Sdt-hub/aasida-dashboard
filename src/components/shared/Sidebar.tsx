@@ -4,10 +4,8 @@ import Sider from "antd/es/layout/Sider";
 import Link from "next/link";
 import { useState } from "react";
 import { BiLogOut } from "react-icons/bi";
-import { FaQ, FaUser } from "react-icons/fa6";
-import { HiOutlineCircleStack } from "react-icons/hi2";
-import { MdOutlineManageHistory, MdPeopleOutline } from "react-icons/md";
-import { TbMessage2Dollar } from "react-icons/tb";
+import { FaUser } from "react-icons/fa6";
+import { MdPeopleOutline } from "react-icons/md";
 
 type TSidebarType = {
   collapsed: boolean;
@@ -22,28 +20,28 @@ const items: MenuItem[] = [
     label: <Link href="/apply-management">Apply Management</Link>,
     icon: <MdPeopleOutline size={24} />,
   },
-  {
-    key: "draft-agreement",
-    label: <Link href="/draft-agreement">Draft Agreement</Link>,
-    icon: <TbMessage2Dollar size={24} />,
-  },
-  {
-    key: "setting",
-    label: "Setting",
-    icon: <MdOutlineManageHistory size={24} />,
-    children: [
-      {
-        key: "privacyPolicy",
-        label: <Link href="/privacyPolicy">Privacy Policy</Link>,
-        icon: <HiOutlineCircleStack size={24} />,
-      },
-      {
-        key: "faqs",
-        label: <Link href="/faqs">FAQs</Link>,
-        icon: <FaQ size={24} />,
-      },
-    ],
-  },
+  // {
+  //   key: "draft-agreement",
+  //   label: <Link href="/draft-agreement">Draft Agreement</Link>,
+  //   icon: <TbMessage2Dollar size={24} />,
+  // },
+  // {
+  //   key: "setting",
+  //   label: "Setting",
+  //   icon: <MdOutlineManageHistory size={24} />,
+  //   children: [
+  //     {
+  //       key: "privacyPolicy",
+  //       label: <Link href="/privacyPolicy">Privacy Policy</Link>,
+  //       icon: <HiOutlineCircleStack size={24} />,
+  //     },
+  //     {
+  //       key: "faqs",
+  //       label: <Link href="/faqs">FAQs</Link>,
+  //       icon: <FaQ size={24} />,
+  //     },
+  //   ],
+  // },
   {
     key: "Profile",
     label: <Link href="/profile">Profile</Link>,
