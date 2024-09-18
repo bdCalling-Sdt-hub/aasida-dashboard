@@ -21,7 +21,11 @@ const UDatePicker = ({ name, label, placeholder }: TDatePickerProps) => {
                 id={name}
                 style={{ width: "100%" }}
               />
-              {error && <small style={{ color: "red" }}>{error.message} something </small>}
+              {error && (
+                <small style={{ color: "red" }}>
+                  {error.message} something{" "}
+                </small>
+              )}
             </Form.Item>
           );
         }}

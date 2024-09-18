@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { configureStore } from "@reduxjs/toolkit";
 import {
   FLUSH,
@@ -9,9 +11,9 @@ import {
   REGISTER,
   REHYDRATE,
 } from "redux-persist";
+import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import authSlice from "../redux/features/authSlice";
 import { baseApi } from "./api/baseApi";
-import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 
 const createNoopStorage = () => {
   return {
@@ -31,7 +33,6 @@ const storage =
   typeof window === "undefined"
     ? createNoopStorage()
     : createWebStorage("local");
-
 
 const persistConfig = {
   key: "auth",

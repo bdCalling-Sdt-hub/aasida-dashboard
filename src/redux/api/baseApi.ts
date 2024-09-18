@@ -4,7 +4,7 @@ import { logout, setUser } from "../features/authSlice";
 import { tagTypesList } from "../tagTypes";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: "http://192.168.10.138:8000/api/v1",
+  baseUrl: "http://159.223.184.53:9002/api/v1",
   prepareHeaders: (headers, { getState }) => {
     const otpToken = sessionStorage.getItem("token");
     const forgotPasswordToken = sessionStorage.getItem("forgotPasswordToken");
@@ -33,7 +33,7 @@ const baseQueryWithRefreshToken = async (
 
   if (result?.error?.status === 401) {
     const res = await fetch(
-      `http://192.168.10.138:8000/api/v1/auth/refresh-token`,
+      `http://159.223.184.53:9002/api/v1/auth/refresh-token`,
       {
         method: "POST",
         credentials: "include",

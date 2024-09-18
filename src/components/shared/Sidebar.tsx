@@ -7,10 +7,7 @@ import Sider from "antd/es/layout/Sider";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { BiLogOut } from "react-icons/bi";
-import { FaUser } from "react-icons/fa6";
 import { LuLogOut, LuUser, LuUsers } from "react-icons/lu";
-import { MdPeopleOutline } from "react-icons/md";
 
 type TSidebarType = {
   collapsed: boolean;
@@ -68,12 +65,11 @@ const Sidebar = ({ collapsed, setCollapsed }: TSidebarType) => {
     // Set current key to make menu item selected/active
     setCurrent(e.key);
 
-
     if (e.key === "logout") {
       dispatch(logout());
       router.refresh();
 
-      Success_model({title: "Logout successful"})
+      Success_model({ title: "Logout successful" });
     }
   };
 
@@ -81,7 +77,6 @@ const Sidebar = ({ collapsed, setCollapsed }: TSidebarType) => {
     <Sider
       trigger={null}
       collapsible
-
       collapsed={collapsed}
       onCollapse={(value) => setCollapsed(!value)}
       className={`px-4 overflow-hidden ${!collapsed ? "min-w-[280px]" : ""}`}
