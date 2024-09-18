@@ -22,7 +22,7 @@ const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
 const LoginForm = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const [login] = useLoginMutation();
+  const [login, {isLoading: IsLoggingIn}] = useLoginMutation();
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onFinish: FormProps<FieldType>["onFinish"] = async (data: any) => {
@@ -91,6 +91,7 @@ const LoginForm = () => {
 
       <Form.Item style={{ display: "flex", justifyContent: "center" }}>
         <Button
+        loading={IsLoggingIn}
           htmlType="submit"
           size="large"
           style={{ backgroundColor: "#232323", color: "#F8FAFC" }}

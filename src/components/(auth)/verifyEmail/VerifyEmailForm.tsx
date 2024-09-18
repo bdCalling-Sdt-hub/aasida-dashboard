@@ -15,14 +15,19 @@ const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
 };
 
 const VerifyEmailForm = () => {
-  const [Otpverification] = useVerifyOtpMutation();
+  const [Otpverification, {isLoading}] = useVerifyOtpMutation();
   const router = useRouter();
+
+
   //handle password change
   const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
     try {
       const res = await Otpverification(values).unwrap();
       sessionStorage.setItem("token", res?.data?.token);
       Success_model({ title: "Otp verified successfully." });
+
+      // Navigate user to `/setNewPass` to create new password
+      router.push("/setNewPass")
     } catch (error: any) {
       Error_Modal(error?.data?.message);
     }
@@ -48,11 +53,12 @@ const VerifyEmailForm = () => {
         }}
         rules={[{ required: true, message: "Please input OPT" }]}
       >
-        <Input.OTP size="large" length={4} />
+        <Input.OTP size="large" length={4} style={{fontSize: "10rem", fontWeight:"bold"}} />
       </Form.Item>
 
       <Form.Item style={{ display: "flex", justifyContent: "center" }}>
         <Button
+        loading={isLoading}
           htmlType="submit"
           size="large"
           style={{ backgroundColor: "#232323", color: "#F8FAFC" }}

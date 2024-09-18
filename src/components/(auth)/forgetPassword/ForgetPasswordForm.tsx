@@ -15,7 +15,7 @@ const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
 };
 
 const ForgetPasswordForm = () => {
-  const [forgotpassword] = useForgotPassMutation();
+  const [forgotpassword, {isLoading}] = useForgotPassMutation();
   const route = useRouter();
 
   //handle password change
@@ -56,6 +56,7 @@ const ForgetPasswordForm = () => {
 
       <Form.Item style={{ display: "flex", justifyContent: "center" }}>
         <Button
+        loading={isLoading}
           htmlType="submit"
           size="large"
           style={{ backgroundColor: "#232323", color: "#F8FAFC" }}

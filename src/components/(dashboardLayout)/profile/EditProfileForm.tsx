@@ -45,6 +45,7 @@ const EditProfileForm = ({ data }: any) => {
             activeBorderColor: "#243A40",
             hoverBorderColor: "#46A39D",
             colorText: "white",
+            colorTextDisabled: "rgba(255,255,255,0.25)",
           },
           Form: {
             labelColor: "white",

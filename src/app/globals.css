@@ -58,3 +58,6 @@ body {
 .ant-dropdown-trigger .anticon svg {
   fill: #fff !important;
 }
+.ant-otp input {
+  font-size: 1.1rem;
+}

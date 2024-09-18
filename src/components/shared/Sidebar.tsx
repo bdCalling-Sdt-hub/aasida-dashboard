@@ -1,12 +1,15 @@
 "use client";
 import { logout } from "@/redux/features/authSlice";
 import { useAppDispatch } from "@/redux/hooks";
+import { Success_model } from "@/utils/modalHook";
 import { Menu, MenuProps } from "antd";
 import Sider from "antd/es/layout/Sider";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { BiLogOut } from "react-icons/bi";
 import { FaUser } from "react-icons/fa6";
+import { LuLogOut, LuUser, LuUsers } from "react-icons/lu";
 import { MdPeopleOutline } from "react-icons/md";
 
 type TSidebarType = {
@@ -20,7 +23,7 @@ const items: MenuItem[] = [
   {
     key: "apply-management",
     label: <Link href="/apply-management">Apply Management</Link>,
-    icon: <MdPeopleOutline size={24} />,
+    icon: <LuUsers size={20} />,
   },
   // {
   //   key: "draft-agreement",
@@ -47,23 +50,30 @@ const items: MenuItem[] = [
   {
     key: "Profile",
     label: <Link href="/profile">Profile</Link>,
-    icon: <FaUser size={24} />,
+    icon: <LuUser size={20} />,
   },
   {
     key: "logout",
-    label: <Link href="/login">Logout</Link>,
-    icon: <BiLogOut size={24} />,
+    label: "Logout",
+    icon: <LuLogOut size={20} />,
   },
 ];
 
 const Sidebar = ({ collapsed, setCollapsed }: TSidebarType) => {
   const dispatch = useAppDispatch();
   const [current, setCurrent] = useState("apply-management");
+  const router = useRouter();
 
   const OnClick: MenuProps["onClick"] = (e) => {
+    // Set current key to make menu item selected/active
     setCurrent(e.key);
+
+
     if (e.key === "logout") {
       dispatch(logout());
+      router.refresh();
+
+      Success_model({title: "Logout successful"})
     }
   };
 
@@ -71,6 +81,7 @@ const Sidebar = ({ collapsed, setCollapsed }: TSidebarType) => {
     <Sider
       trigger={null}
       collapsible
+
       collapsed={collapsed}
       onCollapse={(value) => setCollapsed(!value)}
       className={`px-4 overflow-hidden ${!collapsed ? "min-w-[280px]" : ""}`}

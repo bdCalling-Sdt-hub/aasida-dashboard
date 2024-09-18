@@ -16,7 +16,7 @@ const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = (errorInfo) => {
 };
 
 const SetNewPassForm = () => {
-  const [resetPassword] = useResetPassMutation();
+  const [resetPassword, {isLoading}] = useResetPassMutation();
   const route = useRouter();
 
   const onFinish: FormProps<FieldType>["onFinish"] = async (values) => {
@@ -27,7 +27,9 @@ const SetNewPassForm = () => {
       console.log(error?.data?.message);
       Error_Modal(error?.data?.message);
     }
-    // route.push("/login");
+
+    // Navigate to `/login` to login with new password
+    route.push("/login");
   };
 
   return (
@@ -58,6 +60,7 @@ const SetNewPassForm = () => {
 
       <Form.Item style={{ display: "flex", justifyContent: "center" }}>
         <Button
+        loading={isLoading}
           htmlType="submit"
           size="large"
           style={{ backgroundColor: "#232323", color: "#F8FAFC" }}

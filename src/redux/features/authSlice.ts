@@ -18,7 +18,7 @@ const authSlice = createSlice({
       state.token = token;
 
       // Store token in Cookies for middleware authentication
-      Cookies.set("bookatable-access-token", token, { path: "/" });
+      Cookies.set("united-threads-access-token", token, { path: "/" });
     },
 
     logout: (state) => {
@@ -26,7 +26,7 @@ const authSlice = createSlice({
       state.token = null;
 
       // Remove token from cookie
-      Cookies.remove("bookatable-access-token", { path: "/" });
+      Cookies.remove("united-threads-access-token", { path: "/" });
     },
   },
 });
