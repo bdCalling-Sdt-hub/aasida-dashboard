@@ -11,13 +11,13 @@ const ApplicationApi = baseApi.injectEndpoints({
         method: "GET",
         params: query,
       }),
-      providesTags: [tagTypes.application],
+      providesTags: [tagTypes.application, tagTypes.users],
     }),
     getSingleApplication: builder.query({
       query: (id) => ({
         url: `${APP_URL}/${id}`,
       }),
-      providesTags: [tagTypes.application],
+      providesTags: [tagTypes.application, tagTypes.application],
     }),
     updateApplications: builder.mutation({
       query: (data) => ({
@@ -25,7 +25,7 @@ const ApplicationApi = baseApi.injectEndpoints({
         method: "PATCH",
         body: data?.body,
       }),
-      invalidatesTags: [tagTypes.application],
+      invalidatesTags: [tagTypes.application, tagTypes.application],
     }),
   }),
 

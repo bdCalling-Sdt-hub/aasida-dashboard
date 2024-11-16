@@ -7,7 +7,14 @@ import {
 } from "@/redux/api/applicationApi";
 import { useUpdateUserMutation } from "@/redux/api/authApi";
 import { Error_Modal, Success_model } from "@/utils/modalHook";
-import { Input, Popconfirm, PopconfirmProps, Table, TableProps } from "antd";
+import {
+  Input,
+  Popconfirm,
+  PopconfirmProps,
+  Table,
+  TableProps,
+  Tag,
+} from "antd";
 import { useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import { IoEyeOutline } from "react-icons/io5";
@@ -23,12 +30,17 @@ const ApplyManagementContainer = () => {
   if (searchvalue) {
     query["searchTerm"] = searchvalue;
   }
-  const { data: Adata } = useGetAllApplicationsQuery(query);
+  const { data: Adata, refetch } = useGetAllApplicationsQuery(query);
   const { data: ASdata } = useGetSingleApplicationQuery(id);
-  const confirm: PopconfirmProps["onConfirm"] = async (id) => {
+  console.log(ASdata);
+  const confirm: any = async (id: string, status: string) => {
     try {
-      const res = await updateUser({ id, body: { isActive: false } }).unwrap();
+      const res = await updateUser({
+        id,
+        body: { isActive: status === "block" ? false : true },
+      }).unwrap();
       Success_model({ title: "Profile blocked Successfully" });
+      refetch();
     } catch (error: any) {
       Error_Modal(error?.data?.message);
     }
@@ -57,6 +69,15 @@ const ApplyManagementContainer = () => {
       title: "Email",
       dataIndex: "applicant",
       render: (data) => <p>{data?.email}</p>,
+    },
+    {
+      title: "Account Status",
+      dataIndex: "applicant",
+      render: (data) => (
+        <Tag color={data?.isActive === true ? "green" : "red"}>
+          {data?.isActive ? "Active" : "Blocked"}
+        </Tag>
+      ),
     },
     {
       title: "Application Date",
@@ -109,7 +130,7 @@ const ApplyManagementContainer = () => {
             <Popconfirm
               title="Block the User"
               description="Are you sure to block this user?"
-              onConfirm={() => confirm(data?.applicant?._id)}
+              onConfirm={() => confirm(data?.applicant?._id, "block")}
               okText="Yes"
               cancelText="No"
             >
@@ -120,7 +141,19 @@ const ApplyManagementContainer = () => {
               />
             </Popconfirm>
           ) : (
-            <></>
+            <Popconfirm
+              title="Unblock the User"
+              description="Are you sure to block this user?"
+              onConfirm={() => confirm(data?.applicant?._id, "unblock")}
+              okText="Yes"
+              cancelText="No"
+            >
+              <LiaUserTimesSolid
+                className="cursor-pointer"
+                size={20}
+                color="green"
+              />
+            </Popconfirm>
           )}
         </div>
       ),

@@ -21,7 +21,7 @@ const authApi = baseApi.injectEndpoints({
         body: data?.body,
       }),
 
-      invalidatesTags: [tagTypes.auth],
+      invalidatesTags: [tagTypes.auth, tagTypes.application],
     }),
     updateProfile: builder.mutation({
       query: (data) => ({
@@ -30,7 +30,7 @@ const authApi = baseApi.injectEndpoints({
         body: data,
       }),
 
-      invalidatesTags: [tagTypes.auth],
+      invalidatesTags: [tagTypes.auth, tagTypes.application],
     }),
     profile: builder.query({
       query: () => ({
