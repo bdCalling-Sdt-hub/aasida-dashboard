@@ -25,6 +25,7 @@ const ApplyManagementContainer = () => {
   const [open, setOpen] = useState(false);
   const [searchvalue, setsearchvalue] = useState();
   const [updateUser] = useUpdateUserMutation();
+
   const [id, setId] = useState("");
   const query: any = {};
   if (searchvalue) {
@@ -32,7 +33,7 @@ const ApplyManagementContainer = () => {
   }
   const { data: Adata, refetch } = useGetAllApplicationsQuery(query);
   const { data: ASdata } = useGetSingleApplicationQuery(id);
-  console.log(ASdata);
+
   const confirm: any = async (id: string, status: string) => {
     try {
       const res = await updateUser({
@@ -172,6 +173,7 @@ const ApplyManagementContainer = () => {
           className="max-w-md bg-black text-[#F8FAFC] placeholder:!text-white py-2"
         />
       </div>
+
       <Table
         columns={columns}
         dataSource={Adata?.data}

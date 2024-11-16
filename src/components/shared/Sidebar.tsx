@@ -5,9 +5,10 @@ import { Success_model } from "@/utils/modalHook";
 import { Menu, MenuProps } from "antd";
 import Sider from "antd/es/layout/Sider";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { LuLogOut, LuUser, LuUsers } from "react-icons/lu";
+import { SlBookOpen } from "react-icons/sl";
 
 type TSidebarType = {
   collapsed: boolean;
@@ -18,9 +19,14 @@ type MenuItem = Required<MenuProps>["items"][number];
 
 const items: MenuItem[] = [
   {
+    key: "users",
+    label: <Link href="/users">Users Management</Link>,
+    icon: <LuUsers size={20} />,
+  },
+  {
     key: "apply-management",
     label: <Link href="/apply-management">Apply Management</Link>,
-    icon: <LuUsers size={20} />,
+    icon: <SlBookOpen size={18} />,
   },
   // {
   //   key: "draft-agreement",
@@ -58,13 +64,12 @@ const items: MenuItem[] = [
 
 const Sidebar = ({ collapsed, setCollapsed }: TSidebarType) => {
   const dispatch = useAppDispatch();
-  const [current, setCurrent] = useState("apply-management");
   const router = useRouter();
 
-  const OnClick: MenuProps["onClick"] = (e) => {
-    // Set current key to make menu item selected/active
-    setCurrent(e.key);
+  // Get current path name for active menu item
+  const pathName = usePathname()?.replace("/", "");
 
+  const OnClick: MenuProps["onClick"] = (e) => {
     if (e.key === "logout") {
       dispatch(logout());
       router.refresh();
@@ -85,8 +90,7 @@ const Sidebar = ({ collapsed, setCollapsed }: TSidebarType) => {
         <div className="demo-logo-vertical pb-4 pt-20"></div>
         <Menu
           onClick={OnClick}
-          defaultOpenKeys={["apply-management"]}
-          selectedKeys={[current]}
+          defaultSelectedKeys={[pathName]}
           mode="inline"
           items={items}
         />

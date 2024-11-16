@@ -30,7 +30,7 @@ const authApi = baseApi.injectEndpoints({
         body: data,
       }),
 
-      invalidatesTags: [tagTypes.auth, tagTypes.application],
+      invalidatesTags: [tagTypes.auth, tagTypes.application, tagTypes.users],
     }),
     profile: builder.query({
       query: () => ({

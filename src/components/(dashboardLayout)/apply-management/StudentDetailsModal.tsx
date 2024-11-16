@@ -2,6 +2,7 @@
 import { useUpdateApplicationsMutation } from "@/redux/api/applicationApi";
 import { Error_Modal, Success_model } from "@/utils/modalHook";
 import { Button, Divider, Modal } from "antd";
+import moment from "moment";
 
 type TPropsType = {
   open: boolean;
@@ -47,7 +48,8 @@ const StudentDetailsModal = ({ open, setOpen, data }: TPropsType) => {
       <div className="space-y-16">
         {/* ACCOUNT HOLDER information */}
         <div className="border border-dashed border-black/25 p-6 mt-10 rounded-lg">
-          <h4 className="text-xl font-medium">ACCOUNT HOLDER DETAILS:</h4>
+          <h4 className="text-xl font-medium mb-8">ACCOUNT HOLDER DETAILS:</h4>
+
           <div className="mt-2  font-medium flex justify-between  gap-10">
             <div className="space-y-1">
               <div className="flex justify-between gap-5">
@@ -86,12 +88,14 @@ const StudentDetailsModal = ({ open, setOpen, data }: TPropsType) => {
 
         {/* personal information */}
         <div className="border border-dashed border-black/25 p-6  rounded-lg mt-10">
-          <h4 className="text-xl font-medium">ACCOUNT HOLDER DETAILS:</h4>
+          <h4 className="text-xl font-medium mb-8">ACCOUNT HOLDER DETAILS:</h4>
           <div className="mt-2 ">
             <div className="space-y-4">
               <div className="flex justify-between gap-5">
                 <h4>Date of Birth:</h4>
-                <p className="font-medium">{data?.dateOfBirth}</p>
+                <p className="font-medium">
+                  {moment(data?.dateOfBirth).format("YYYY-MM-DD, HH:mm")}
+                </p>
               </div>
 
               <div className="flex justify-between gap-5">
@@ -110,7 +114,7 @@ const StudentDetailsModal = ({ open, setOpen, data }: TPropsType) => {
         {/* Current Qualifications: */}
 
         <div className="border border-dashed border-black/25 p-6  rounded space-y-4">
-          <h4 className="text-xl font-medium">Current Qualifications:</h4>
+          <h4 className="text-xl font-medium mb-8">Current Qualifications:</h4>
           <header className="grid grid-cols-4 gap-7 justify-between mt-3">
             <h1></h1>
             <h1 className="font-semibold">Undergraduate</h1>
@@ -154,25 +158,49 @@ const StudentDetailsModal = ({ open, setOpen, data }: TPropsType) => {
           <div className="grid grid-cols-4 gap-7 justify-between mt-2">
             <p>Commenced</p>
             <p className="font-medium">
-              {data?.qualifications?.[0]?.commenced ?? "N/A"}
+              {data?.qualifications?.[0]?.commenced
+                ? moment(data?.qualifications?.[0]?.commenced).format(
+                    "YYYY-MM-DD, HH:mm"
+                  )
+                : "N/A"}
             </p>
             <p className="font-medium">
-              {data?.qualifications?.[1]?.commenced ?? "N/A"}
+              {data?.qualifications?.[1]?.commenced
+                ? moment(data?.qualifications?.[1]?.commenced).format(
+                    "YYYY-MM-DD, HH:mm"
+                  )
+                : "N/A"}
             </p>
             <p className="font-medium">
-              {data?.qualifications?.[2]?.commenced ?? "N/A"}
+              {data?.qualifications?.[2]?.commenced
+                ? moment(data?.qualifications?.[2]?.commenced).format(
+                    "YYYY-MM-DD, HH:mm"
+                  )
+                : "N/A"}
             </p>
           </div>
           <div className="grid grid-cols-4 gap-7 justify-between mt-2">
             <p>Completed</p>
             <p className="font-medium">
-              {data?.qualifications?.[0]?.completed ?? "N/A"}
+              {data?.qualifications?.[0]?.completed
+                ? moment(data?.qualifications?.[0]?.completed).format(
+                    "YYYY-MM-DD, HH:mm"
+                  )
+                : "N/A"}
             </p>
             <p className="font-medium">
-              {data?.qualifications?.[1]?.completed ?? "N/A"}
+              {data?.qualifications?.[1]?.completed
+                ? moment(data?.qualifications?.[1]?.completed).format(
+                    "YYYY-MM-DD, HH:mm"
+                  )
+                : "N/A"}
             </p>
             <p className="font-medium">
-              {data?.qualifications?.[2]?.completed ?? "N/A"}
+              {data?.qualifications?.[2]?.completed
+                ? moment(data?.qualifications?.[2]?.completed).format(
+                    "YYYY-MM-DD, HH:mm"
+                  )
+                : "N/A"}
             </p>
           </div>
           <div className="grid grid-cols-4 gap-7 justify-between mt-2">
@@ -204,7 +232,9 @@ const StudentDetailsModal = ({ open, setOpen, data }: TPropsType) => {
         {/* English Language Proficiency: */}
 
         <div className="border border-dashed border-black/25 p-6  rounded">
-          <h4 className="text-xl font-medium">English Language Proficiency:</h4>
+          <h4 className="text-xl font-medium mb-8">
+            English Language Proficiency:
+          </h4>
           <header className="grid grid-cols-4 gap-7 justify-between mt-3">
             <h1 className=" flex justify-center border-r-2 border-gray-600 font-semibold">
               English Test taken
@@ -227,12 +257,16 @@ const StudentDetailsModal = ({ open, setOpen, data }: TPropsType) => {
             <div className="border-r-2 mr-4 pr-3 border-black">
               <div className="flex justify-between mb-2 gap-5">
                 <h4>Test:</h4>
-                <p className="font-medium">ILETS</p>
+                <p className="font-medium">
+                  {data?.englishProficiency?.testName}
+                </p>
               </div>
               <div className="flex justify-between gap-5">
                 <h4>Date:</h4>
                 <p className="font-medium">
-                  {data?.englishProficiency?.testDate}
+                  {moment(data?.englishProficiency?.testDate).format(
+                    "YYYY-MM-DD, HH:mm"
+                  )}
                 </p>
               </div>
             </div>
@@ -258,7 +292,7 @@ const StudentDetailsModal = ({ open, setOpen, data }: TPropsType) => {
         {/* Intended Post-graduate Studies in Australia: */}
 
         <div className="border border-dashed border-black/25 p-6  rounded space-y-4">
-          <h4 className="text-xl font-medium">
+          <h4 className="text-xl font-medium mb-8">
             Intended Post-graduate Studies in Australia:
           </h4>
           <header className="grid grid-cols-4 gap-7 justify-between mt-3">
@@ -281,7 +315,9 @@ const StudentDetailsModal = ({ open, setOpen, data }: TPropsType) => {
           </div>
           <div className="grid grid-cols-4 gap-7 justify-between mt-2">
             <p>Discipline / Area</p>
-            <p className="font-medium">{data?.intendedPostGraduateStudies?.[0]?.discipline}.</p>
+            <p className="font-medium">
+              {data?.intendedPostGraduateStudies?.[0]?.discipline}.
+            </p>
             <p className="font-medium">
               {data?.intendedPostGraduateStudies?.[1]?.discipline ?? "N/A"}.
             </p>
@@ -291,7 +327,9 @@ const StudentDetailsModal = ({ open, setOpen, data }: TPropsType) => {
           </div>
           <div className="grid grid-cols-4 gap-7 justify-between mt-2">
             <p>University</p>
-            <p className="font-medium">{data?.intendedPostGraduateStudies?.[0]?.university}.</p>
+            <p className="font-medium">
+              {data?.intendedPostGraduateStudies?.[0]?.university}.
+            </p>
             <p className="font-medium">
               {data?.intendedPostGraduateStudies?.[1]?.university ?? "N/A"}.
             </p>
@@ -301,7 +339,9 @@ const StudentDetailsModal = ({ open, setOpen, data }: TPropsType) => {
           </div>
           <div className="grid grid-cols-4 gap-7 justify-between mt-2">
             <p>Planned Start</p>
-            <p className="font-medium">{data?.intendedPostGraduateStudies?.[0]?.university}.</p>
+            <p className="font-medium">
+              {data?.intendedPostGraduateStudies?.[0]?.university}.
+            </p>
             <p className="font-medium">
               {data?.intendedPostGraduateStudies?.[1]?.university ?? "N/A"}.
             </p>
@@ -311,7 +351,9 @@ const StudentDetailsModal = ({ open, setOpen, data }: TPropsType) => {
           </div>
           <div className="grid grid-cols-4 gap-7 justify-between mt-2">
             <p>Duration</p>
-            <p className="font-medium">{data?.intendedPostGraduateStudies?.[0]?.university}.</p>
+            <p className="font-medium">
+              {data?.intendedPostGraduateStudies?.[0]?.university}.
+            </p>
             <p className="font-medium">
               {data?.intendedPostGraduateStudies?.[1]?.university ?? "N/A"}.
             </p>
@@ -322,13 +364,13 @@ const StudentDetailsModal = ({ open, setOpen, data }: TPropsType) => {
           <div className="grid grid-cols-4 gap-7 justify-between mt-2">
             <p>University Tuition Fee (AU$/Year)</p>
             <p className="font-medium">
-              {data?.intendedPostGraduateStudies?.[0]?.tuitionFee ?? "N/A"}.
+              {data?.intendedPostGraduateStudies?.[0]?.tuitionFee ?? "N/A"}
             </p>
             <p className="font-medium">
-              {data?.intendedPostGraduateStudies?.[1]?.tuitionFee ?? "N/A"}.
+              {data?.intendedPostGraduateStudies?.[1]?.tuitionFee ?? "N/A"}
             </p>
             <p className="font-medium">
-              {data?.intendedPostGraduateStudies?.[2]?.tuitionFee ?? "N/A"}.
+              {data?.intendedPostGraduateStudies?.[2]?.tuitionFee ?? "N/A"}
             </p>
           </div>
           <div className="grid grid-cols-4 gap-7 justify-between mt-2">
