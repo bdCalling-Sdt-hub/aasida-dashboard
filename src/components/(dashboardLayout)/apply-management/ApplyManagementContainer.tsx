@@ -127,7 +127,7 @@ const ApplyManagementContainer = () => {
               setOpen(true);
             }}
           />
-          {data?.applicant?.isActive ? (
+          {/* {data?.applicant?.isActive ? (
             <Popconfirm
               title="Block the User"
               description="Are you sure to block this user?"
@@ -155,7 +155,7 @@ const ApplyManagementContainer = () => {
                 color="green"
               />
             </Popconfirm>
-          )}
+          )} */}
         </div>
       ),
     },
