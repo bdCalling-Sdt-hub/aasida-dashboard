@@ -166,7 +166,7 @@ const ApplyManagementContainer = () => {
       <div className="flex items-center justify-between py-4">
         <h1 className="text-2xl font-bold w-full">Applicants List</h1>
         <Input
-          onChange={(e: any) => setsearchvalue(e.target.value)}
+          onChange={(e: any) => setsearchvalue(e?.target?.value)}
           type="search"
           placeholder="Search..."
           prefix={<IoIosSearch size={20} />}
