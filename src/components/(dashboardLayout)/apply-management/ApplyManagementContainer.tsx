@@ -23,24 +23,14 @@ import StudentDetailsModal from "./StudentDetailsModal";
 
 const ApplyManagementContainer = () => {
   const [open, setOpen] = useState(false);
-  const [searchvalue, setsearchvalue] = useState();
+  const [searchvalue, setsearchvalue] = useState(null);
   const [updateUser] = useUpdateUserMutation();
 
   const [id, setId] = useState("");
   const query: any = {};
-  if (req?.query?.searchTerm) {
-    const searchTerm = req.query.searchTerm as string;
-
-    // Check if searchTerm is not an empty string
-    if (searchTerm.trim() !== "") {
-      // Add regex condition for `surName` and `email`
-      query.$or = [
-        { surName: { $regex: searchTerm, $options: "i" } }, // Case-insensitive match
-        { email: { $regex: searchTerm, $options: "i" } },
-      ];
-    }
+  if (searchvalue) {
+    query["searchTerm"] = searchvalue;
   }
-
   const { data: Adata, refetch } = useGetAllApplicationsQuery(query);
   const { data: ASdata } = useGetSingleApplicationQuery(id);
 
