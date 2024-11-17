@@ -28,9 +28,19 @@ const ApplyManagementContainer = () => {
 
   const [id, setId] = useState("");
   const query: any = {};
-  if (searchvalue) {
-    query["searchTerm"] = searchvalue;
+  if (req?.query?.searchTerm) {
+    const searchTerm = req.query.searchTerm as string;
+
+    // Check if searchTerm is not an empty string
+    if (searchTerm.trim() !== "") {
+      // Add regex condition for `surName` and `email`
+      query.$or = [
+        { surName: { $regex: searchTerm, $options: "i" } }, // Case-insensitive match
+        { email: { $regex: searchTerm, $options: "i" } },
+      ];
+    }
   }
+
   const { data: Adata, refetch } = useGetAllApplicationsQuery(query);
   const { data: ASdata } = useGetSingleApplicationQuery(id);
 
